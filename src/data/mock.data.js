@@ -1,18 +1,18 @@
-let PLACES = [
+let PRODUCTS = [
 	{
 		id: '7f28c5f9-d711-4cd6-ac15-d13d71abff84',
-		name: 'Dranken Geers',
-		rating: 3,
+		name: 'Asperge',
+		price: 3,
 	},
 	{
 		id: '7f28c5f9-d711-4cd6-ac15-d13d71abff85',
-		name: 'Irish Pub',
-		rating: 2,
+		name: 'Tomaat',
+		price: 2,
 	},
 	{
 		id: '7f28c5f9-d711-4cd6-ac15-d13d71abff83',
-		name: 'Loon',
-		rating: 4,
+		name: 'Appel',
+		price: 4,
 	},
 ];
 
