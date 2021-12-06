@@ -12,7 +12,7 @@ module.exports = {
             table.integer('price')
                 .notNullable();
 
-            table.unique('name', 'idx_place_name_unique');
+            table.unique('name', 'idx_product_name_unique');
         });
     },
     down: (knex) => {

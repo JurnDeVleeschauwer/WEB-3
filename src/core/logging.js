@@ -56,7 +56,7 @@ const getChildLogger = (name, meta = {}) => {
  * @param {boolean} options.isProduction
  * @param {object} options.defaultMeta
  */
- const initializeLogger = ({
+const initializeLogger = ({
   level,
   disabled,
   isProduction,
@@ -65,8 +65,12 @@ const getChildLogger = (name, meta = {}) => {
   logger = winston.createLogger({
     level,
     defaultMeta,
-    format: isProduction ? prodFormat() : devFormat()
-    });
+    format: isProduction ? prodFormat() : devFormat(),
+    transports: [
+      new winston.transports.Console({
+        silent: disabled,
+      })]
+  });
 
   logger.info(` Logger initialized with minimum log level ${level}`);
 };

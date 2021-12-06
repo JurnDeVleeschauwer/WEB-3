@@ -8,15 +8,23 @@
         "@koa/router": "^10.1.1",
         "config": "^3.3.6",
         "env-cmd": "^10.1.0",
+        "jest": "^27.4.3",
         "knex": "^0.95.14",
         "koa": "^2.13.4",
         "koa-bodyparser": "^4.3.0",
+        "koa2-swagger-ui": "^5.3.0",
         "mysql2": "^2.3.3",
         "nodemon": "^2.0.15",
+        "supertest": "^6.1.6",
+        "swagger-jsdoc": "^6.1.0",
         "uuid": "^8.3.2",
         "winston": "^3.3.3"
     },
+    "jest": {
+        "testPathIgnorePatterns": ["src", "node_modules", "config"]
+    },
     "scripts": {
-        "start": "npx env-cmd nodemon src/index.js"
+        "start": "npx env-cmd nodemon src/index.js",
+        "test": "npx env-cmd -f .env.test jest"
     }
 }

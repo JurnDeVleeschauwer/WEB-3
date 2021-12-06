@@ -25,9 +25,9 @@ let TRANSACTIONS = [
 			id: '7f28c5f9-d711-4cd6-ac15-d13d71abff80',
 			name: 'Thomas Aelbrecht',
 		},
-		place: {
+		product: {
 			id: '7f28c5f9-d711-4cd6-ac15-d13d71abff85',
-			name: 'Irish Pub',
+			name: 'Tomato',
 		},
 	},
 	{
@@ -38,9 +38,9 @@ let TRANSACTIONS = [
 			id: '7f28c5f9-d711-4cd6-ac15-d13d71abff80',
 			name: 'Thomas Aelbrecht',
 		},
-		place: {
+		product: {
 			id: '7f28c5f9-d711-4cd6-ac15-d13d71abff85',
-			name: 'Irish Pub',
+			name: 'Asperge',
 		},
 	},
 	{
@@ -51,9 +51,9 @@ let TRANSACTIONS = [
 			id: '7f28c5f9-d711-4cd6-ac15-d13d71abff80',
 			name: 'Thomas Aelbrecht',
 		},
-		place: {
+		prodcut: {
 			id: '7f28c5f9-d711-4cd6-ac15-d13d71abff83',
-			name: 'Loon',
+			name: 'Carrot',
 		},
 	},
 ];

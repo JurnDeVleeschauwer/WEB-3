@@ -62,6 +62,7 @@ async function initializeData() {
     };
     knexInstance = knex(knexOptions);
 
+
     try {
         logger.info(`CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME}`)
         await knexInstance.raw(`CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME}`);
