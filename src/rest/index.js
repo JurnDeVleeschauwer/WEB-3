@@ -10,6 +10,27 @@ const installUserRouter = require('./_user');
  *
  * @param {Koa} app - The Koa application.
  */
+/**
+ * @swagger
+ * components:
+ *   parameters:
+ *     limitParam:
+ *       in: query
+ *       name: limit
+ *       description: Maximum amount of items to return
+ *       required: false
+ *       schema:
+ *         type: integer
+ *         default: 100
+ *     offsetParam:
+ *       in: query
+ *       name: offset
+ *       description: Number of items to skip
+ *       required: false
+ *       schema:
+ *         type: integer
+ *         default: 0
+  */
 module.exports = (app) => {
 
     const router = new Router({

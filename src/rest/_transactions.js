@@ -1,6 +1,24 @@
 const Router = require('@koa/router');
 const transactionService = require('../service/transaction');
 
+
+/**
+ * @swagger
+ * tags:
+ *   name: Transactions
+ *   description: Represents a transaction that was placed by user
+ */
+
+
+
+/**
+ * @swagger
+ * /api/transactions:
+ *   get:
+ *     summary: Get all transactions (paginated)
+ *     tags:
+ *     - Transactions
+ */
 const getAllTransactions = async (ctx) => {
     const limit = ctx.query.limit && Number(ctx.query.limit);
     const offset = ctx.query.offset && Number(ctx.query.offset);

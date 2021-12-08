@@ -1,4 +1,4 @@
-# Shop API
+# webshop API
 
 To start this API, create a `.env` file in the root of this folder with this content
 
@@ -29,6 +29,6 @@ Run the app with `npm start`.
 npm install
 ```
 
-- Migrations failed, try dropping the existing `shop` database and run again
+- Migrations failed, try dropping the existing `webshop` database and run again
 
 - Others: Google is your friend

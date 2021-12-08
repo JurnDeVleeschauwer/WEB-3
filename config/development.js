@@ -11,7 +11,7 @@ module.exports = {
 		client: 'mysql2',
 		host: 'localhost',
 		port: 3306,
-		name: 'shop',
+		name: 'webshop',
 		username: 'root',
 		password: 'root',
 	},

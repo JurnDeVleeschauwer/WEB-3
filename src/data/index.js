@@ -65,8 +65,14 @@ async function initializeData() {
 
     try {
         logger.info(`CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME}`)
+        await knexInstance.raw('SELECT 1+1 AS result');
         await knexInstance.raw(`CREATE DATABASE IF NOT EXISTS ${DATABASE_NAME}`);
 
+
+        await knexInstance.destroy();
+
+        knexOptions.connection.database = DATABASE_NAME;
+        knexInstance = knex(knexOptions);
         await knexInstance.raw('SELECT 1+1 AS result');
     } catch (error) {
         logger.error(error.message, { error });
