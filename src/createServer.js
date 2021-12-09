@@ -53,17 +53,36 @@ module.exports = async function createServer() {
     app.use(bodyParser());
 
     const options = {
-        swaggerDefinition,
-        apis: ['./rest/*.js'],
+        apis: ['src/rest/*.js'],
+        swaggerDefinition: {
+            openapi: '3.0.0',
+            info: {
+                title: "Webshop API with Swagger",
+                version: '1.0.0',
+                description:
+                    'This is a simple CRUD API application made with Koa and documented with Swagger',
+                license: {
+                    name: 'Licensed Under MIT',
+                    url: 'https://spdx.org/licenses/MIT.html',
+                },
+                contact: {
+                    name: 'WebshopAPI',
+                },
+            },
+            basePath: "/api",
+            servers: [{
+                url: 'http://localhost:9000/',
+                description: 'Development server',
+            }],
+        },
     }
 
 
     const spec = swaggerJsdoc(options);
+    logger.info(spec);
     app.use(
         koaSwagger({
             routePrefix: '/swagger', // host at /swagger instead of default /docs
-            specPrefix: '/swagger/spec', // route where the spec is returned
-            exposeSpec: true, // expose spec file
             swaggerOptions: {  // passed to SwaggerUi()
                 spec,
             },

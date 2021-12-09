@@ -21,7 +21,11 @@
         "winston": "^3.3.3"
     },
     "jest": {
-        "testPathIgnorePatterns": ["src", "node_modules", "config"]
+        "testPathIgnorePatterns": [
+            "src",
+            "node_modules",
+            "config"
+        ]
     },
     "scripts": {
         "start": "npx env-cmd nodemon src/index.js",
