@@ -14,7 +14,7 @@ const getVersion = async (ctx) => {
  *
  * @param {Router} app - The parent router.
  */
-module.exports = function installPlacesRoutes(app) {
+module.exports = function installProductsRoutes(app) {
     const router = new Router({
         prefix: '/health',
     });

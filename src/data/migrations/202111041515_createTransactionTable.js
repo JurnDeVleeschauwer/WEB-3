@@ -20,12 +20,12 @@ module.exports = {
                 .references(`${tables.user}.id`)
                 .onDelete('CASCADE');
 
-            table.uuid('product_id')
+            table.uuid('place_id')
                 .notNullable();
 
             // Give this foreign key a name for better error handling in service layer
-            table.foreign('product_id', 'fk_transaction_product')
-                .references(`${tables.product}.id`)
+            table.foreign('place_id', 'fk_transaction_place')
+                .references(`${tables.place}.id`)
                 .onDelete('CASCADE');
         });
     },

@@ -41,13 +41,30 @@ const findById = (id) => {
 };
 
 /**
+ * Find a user with the given email.
+ *
+ * @param {string} email - The email to search for.
+ */
+const findByEmail = (email) => {
+  return getKnex()(tables.user)
+    .where('email', email)
+    .first();
+};
+
+/**
  * Create a new user with the given `name`.
  *
  * @param {object} user - User to create.
  * @param {string} user.name - Name of the user.
+ * @param {string} user.email - Email of the user.
+ * @param {string} user.passwordHash - Hashed password of the user.
+ * @param {string[]} user.roles - Roles of the user.
  */
 const create = async ({
   name,
+  email,
+  passwordHash,
+  roles,
 }) => {
   try {
     const id = uuid.v4();
@@ -55,6 +72,9 @@ const create = async ({
       .insert({
         id,
         name,
+        email,
+        password_hash: passwordHash,
+        roles: JSON.stringify(roles),
       });
     return await findById(id);
   } catch (error) {
@@ -116,6 +136,7 @@ module.exports = {
   findAll,
   findCount,
   findById,
+  findByEmail,
   create,
   updateById,
   deleteById,

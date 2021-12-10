@@ -14,7 +14,7 @@ module.exports = {
                 name: 'WebshopAPI',
             },
         },
-        //basePath: "/api",
+        basePath: "/api",
         servers: [{
             url: 'http://localhost:9000/',
             description: 'Development server',

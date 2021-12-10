@@ -1,5 +1,6 @@
 const Router = require('@koa/router');
 const transactionService = require('../service/transaction');
+const { requireAuthentication } = require('../core/auth');
 
 
 /**
@@ -96,6 +97,7 @@ const getAllTransactions = async (ctx) => {
 const createTransaction = async (ctx) => {
     const newTransaction = await transactionService.create({
         ...ctx.request.body,
+        userId: ctx.state.session.userId,
         date: new Date(ctx.request.body.date),
     });
     ctx.body = newTransaction;
@@ -109,6 +111,7 @@ const getTransactionById = async (ctx) => {
 const updateTransaction = async (ctx) => {
     ctx.body = await transactionService.updateById(ctx.params.id, {
         ...ctx.request.body,
+        userId: ctx.state.session.userId,
         date: new Date(ctx.request.body.date),
     });
 };
@@ -128,11 +131,11 @@ module.exports = (app) => {
         prefix: '/transactions',
     });
 
-    router.get('/', getAllTransactions);
-    router.post('/', createTransaction);
-    router.get('/:id', getTransactionById);
-    router.put('/:id', updateTransaction);
-    router.delete('/:id', deleteTransaction);
+    router.get('/', requireAuthentication, getAllTransactions);
+    router.post('/', requireAuthentication, createTransaction);
+    router.get('/:id', requireAuthentication, getTransactionById);
+    router.put('/:id', requireAuthentication, updateTransaction);
+    router.delete('/:id', requireAuthentication, deleteTransaction);
 
     app.use(router.routes()).use(router.allowedMethods());
 };

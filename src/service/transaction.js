@@ -1,7 +1,6 @@
 const config = require('config');
 const { getChildLogger } = require('../core/logging');
 const transactionRepository = require('../repository/transaction');
-const userService = require('./user');
 
 const DEFAULT_PAGINATION_LIMIT = config.get('pagination.limit');
 const DEFAULT_PAGINATION_OFFSET = config.get('pagination.offset');
@@ -55,13 +54,11 @@ const getById = async (id) => {
  * @param {string} transaction.amount - Amount deposited/withdrawn.
  * @param {Date} transaction.date - Date of the transaction.
  * @param {string} transaction.productId - Id of the product the transaction happened.
- * @param {string} transaction.user - Name of the user who did the transaction.
+* @param {string} [transaction.userId] - Id of the user who did the transaction.
  */
-const create = async ({ amount, date, productId, user }) => {
-    debugLog('Creating new transaction', { amount, date, productId, user });
+const create = async ({ amount, date, productId, userId }) => {
+    debugLog('Creating new transaction', { amount, date, productId, userId });
 
-    // For now simply create a new user every time
-    const { id: userId } = await userService.register({ name: user });
 
     return transactionRepository.create({
         amount,
@@ -79,18 +76,16 @@ const create = async ({ amount, date, productId, user }) => {
  * @param {string} [transaction.amount] - Amount deposited/withdrawn.
  * @param {Date} [transaction.date] - Date of the transaction.
  * @param {string} [transaction.productId] - Id of the product the transaction happened.
- * @param {string} [transaction.user] - Name of the user who did the transaction.
+ * @param {string} [transaction.userId] - Name of the user who did the transaction.
  */
-const updateById = async (id, { amount, date, productId, user }) => {
+const updateById = async (id, { amount, date, productId, userId }) => {
     debugLog(`Updating transaction with id ${id}`, {
         amount,
         date,
         productId,
-        user,
+        userId,
     });
 
-    // For now simply create a new user every time
-    const { id: userId } = await userService.register({ name: user });
 
     return transactionRepository.updateById(id, {
         amount,

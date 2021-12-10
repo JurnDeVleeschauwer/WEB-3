@@ -58,4 +58,4 @@ let TRANSACTIONS = [
 	},
 ];
 
-module.exports = { TRANSACTIONS, PLACES };
+module.exports = { TRANSACTIONS, PRODUCTS };

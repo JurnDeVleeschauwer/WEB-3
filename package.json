@@ -6,9 +6,11 @@
     "dependencies": {
         "@koa/cors": "^3.1.0",
         "@koa/router": "^10.1.1",
+        "argon2": "^0.28.3",
         "config": "^3.3.6",
         "env-cmd": "^10.1.0",
         "jest": "^27.4.3",
+        "jsonwebtoken": "^8.5.1",
         "knex": "^0.95.14",
         "koa": "^2.13.4",
         "koa-bodyparser": "^4.3.0",
@@ -29,6 +31,7 @@
     },
     "scripts": {
         "start": "npx env-cmd nodemon src/index.js",
-        "test": "npx env-cmd -f .env.test jest"
+        "test": "npx env-cmd -f .env.test jest",
+        "test:coverage": "npx env-cmd -f .env.test jest --coverage"
     }
 }
