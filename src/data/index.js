@@ -134,9 +134,9 @@ function getKnex() {
 }
 
 const tables = Object.freeze({
-    transaction: 'transactions',
-    user: 'users',
     product: 'products',
+    user: 'users',
+    transaction: 'transactions',
 });
 
 module.exports = {

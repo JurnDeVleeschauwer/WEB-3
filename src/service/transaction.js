@@ -1,6 +1,7 @@
 const config = require('config');
 const { getChildLogger } = require('../core/logging');
 const transactionRepository = require('../repository/transaction');
+const ServiceError = require('../core/serviceError');
 
 const DEFAULT_PAGINATION_LIMIT = config.get('pagination.limit');
 const DEFAULT_PAGINATION_OFFSET = config.get('pagination.offset');
@@ -41,7 +42,7 @@ const getById = async (id) => {
     const transaction = await transactionRepository.findById(id);
 
     if (!transaction) {
-        throw new Error(`There is no transaction with id ${id}`);
+        throw ServiceError.notFound(`There is no transaction with id ${id}`, { id });
     }
 
     return transaction;

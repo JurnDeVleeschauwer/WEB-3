@@ -3,6 +3,7 @@ const { verifyPassword, hashPassword } = require('../core/password');
 const { generateJWT, verifyJWT } = require('../core/jwt');
 const Role = require('../core/roles');
 const userRepository = require('../repository/user');
+const ServiceError = require('../core/serviceError');
 
 const debugLog = (message, meta = {}) => {
   if (!this.logger) this.logger = getChildLogger('user-service');
@@ -49,14 +50,14 @@ const login = async (email, password) => {
 
   if (!user) {
     // DO NOT expose we don't know the user
-    throw new Error('The given email and password do not match');
+    throw ServiceError.unauthorized('The given email and password do not match');
   }
 
   const passwordValid = await verifyPassword(password, user.password_hash);
 
   if (!passwordValid) {
     // DO NOT expose we know the user but an invalid password was given
-    throw new Error('The given email and password do not match');
+    throw ServiceError.unauthorized('The given email and password do not match');
   }
 
   return await makeLoginData(user);
@@ -121,7 +122,7 @@ const getById = async (id) => {
   const user = await userRepository.findById(id);
 
   if (!user) {
-    throw new Error(`No user with id ${id} exists`, { id });
+    throw ServiceError.notFound(`No user with id ${id} exists`, { id });
   }
 
   return makeExposedUser(user);
@@ -160,7 +161,7 @@ const deleteById = async (id) => {
   const deleted = await userRepository.deleteById(id);
 
   if (!deleted) {
-    throw new Error(`No user with id ${id} exists`, { id });
+    throw ServiceError.notFound(`No user with id ${id} exists`, { id });
   }
 };
 
@@ -179,11 +180,11 @@ const deleteById = async (id) => {
  */
 const checkAndParseSession = async (authHeader) => {
   if (!authHeader) {
-    throw new Error('You need to be signed in');
+    throw ServiceError.unauthorized('You need to be signed in');
   }
 
   if (!authHeader.startsWith('Bearer ')) {
-    throw new Error('Invalid authentication token');
+    throw ServiceError.unauthorized('Invalid authentication token');
   }
 
   const authToken = authHeader.substr(7);
@@ -200,7 +201,7 @@ const checkAndParseSession = async (authHeader) => {
   } catch (error) {
     const logger = getChildLogger('user-service');
     logger.error(error.message, { error });
-    throw new Error(error.message);
+    throw ServiceError.unauthorized(error.message);
   }
 };
 
@@ -219,7 +220,7 @@ const checkRole = (role, roles) => {
   const hasPermission = roles.includes(role);
 
   if (!hasPermission) {
-    throw new Error('You are not allowed to view this part of the application');
+    throw ServiceError.forbidden('You are not allowed to view this part of the application');
   }
 };
 

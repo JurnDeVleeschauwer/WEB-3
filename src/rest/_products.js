@@ -1,31 +1,66 @@
 const Router = require('@koa/router');
 const productService = require('../service/product');
+const { requireAuthentication } = require('../core/auth');
+const Joi = require('joi');
+const validate = require('./_validation.js');
 
-const getAllproducts = async (ctx) => {
+const getAllProducts = async (ctx) => {
     ctx.body = await productService.getAll();
 };
+getAllProducts.validationScheme = {
+    query: Joi.object({
+        limit: Joi.number().positive().max(1000).optional(),
+        offset: Joi.number().min(0).optional(),
+    }).and('limit', 'offset'),
+};
 
-const createproduct = async (ctx) => {
+const createProduct = async (ctx) => {
     const newproduct = await productService.create(ctx.request.body);
     ctx.body = newproduct;
     ctx.status = 201;
 };
+createProduct.validationScheme = {
+    body: {
+        name: Joi.string().max(255),
+        price: Joi.number().min(1).max(5).integer().optional(),
+    },
+};
 
-const getproductById = async (ctx) => {
+
+const getProductById = async (ctx) => {
     ctx.body = await productService.getById(ctx.params.id);
 };
-
-const updateproduct = async (ctx) => {
-    ctx.body = await productService.updateById(ctx.params.id, ctx.request.body);
+getProductById.validationScheme = {
+    params: {
+        id: Joi.string().uuid(),
+    },
 };
 
-const deleteproduct = async (ctx) => {
+const updateProduct = async (ctx) => {
+    ctx.body = await productService.updateById(ctx.params.id, ctx.request.body);
+};
+updateProduct.validationScheme = {
+    params: {
+        id: Joi.string().uuid(),
+    },
+    body: {
+        name: Joi.string().max(255),
+        price: Joi.number().min(1).max(5).integer(),
+    },
+};
+
+const deleteProduct = async (ctx) => {
     await productService.deleteById(ctx.params.id);
     ctx.status = 204;
 };
+deleteProduct.validationScheme = {
+    params: {
+        id: Joi.string().uuid(),
+    },
+};
 
 /**
- * Install transaction routes in the given router.
+ * Install products routes in the given router.
  *
  * @param {Router} app - The parent router.
  */
@@ -34,11 +69,11 @@ module.exports = (app) => {
         prefix: '/products',
     });
 
-    router.get('/', getAllproducts);
-    router.post('/', createproduct);
-    router.get('/:id', getproductById);
-    router.put('/:id', updateproduct);
-    router.delete('/:id', deleteproduct);
+    router.get('/', requireAuthentication, validate(getAllProducts.validationScheme), getAllProducts);
+    router.post('/', requireAuthentication, validate(createProduct.validationScheme), createProduct);
+    router.get('/:id', requireAuthentication, validate(getProductById.validationScheme), getProductById);
+    router.put('/:id', requireAuthentication, validate(updateProduct.validationScheme), updateProduct);
+    router.delete('/:id', requireAuthentication, validate(deleteProduct.validationScheme), deleteProduct);
 
     app.use(router.routes()).use(router.allowedMethods());
 };

@@ -1,5 +1,6 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
+const ServiceError = require('./serviceError');
 
 const JWT_AUDIENCE = config.get('auth.jwt.audience');
 const JWT_SECRET = config.get('auth.jwt.secret');
@@ -44,7 +45,7 @@ module.exports.verifyJWT = (authToken) => {
             authToken, JWT_SECRET, verifyOptions, (err, decodedToken) => {
                 if (err || !decodedToken) {
                     console.log('Error while verifying token:', err.message);
-                    return reject(err || new Error('Token could not be parsed'));
+                    return reject(err || ServiceError.unauthorized('Token could not be parsed'));
                 }
                 return resolve(decodedToken);
             },
