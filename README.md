@@ -6,7 +6,7 @@ To start this API, create a `.env` file in the root of this folder with this con
 NODE_ENV="development"
 ```
 
-And change in the config file `development` the username and password with the credentials of your local database
+And change in the config file `development` and in the `.env.test` the username and password with the credentials of your local database
 
 ```
 DATABASE_USERNAME="root"
