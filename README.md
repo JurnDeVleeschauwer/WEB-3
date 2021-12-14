@@ -4,11 +4,14 @@ To start this API, create a `.env` file in the root of this folder with this con
 
 ```
 NODE_ENV="development"
+```
+
+And change in the config file `development` the username and password with the credentials of your local database
+
+```
 DATABASE_USERNAME="root"
 DATABASE_PASSWORD=""
 ```
-
-Update the username and password with the credentials of your local database.
 
 You can also extend the .env file with these configurations, only if the database host/port are different than our default.
 
