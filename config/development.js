@@ -27,7 +27,7 @@ module.exports = {
 			memoryCost: 2 ** 17,
 		},
 		jwt: {
-			// secret comes via env
+			secret: 'eenveeltemoeilijksecretdatniemandooitzalradenandersisdesitegehacked',
 			expirationInterval: 3 * 24 * 60 * 60 * 1000, // ms (3 days)
 			issuer: 'budget.hogent.be',
 			audience: 'budget.hogent.be',

@@ -14,6 +14,18 @@ module.exports = {
                 name: 'WebshopAPI',
             },
         },
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT"
+                },
+            }
+        },
+        security: [{
+            bearerAuth: []
+        }],
         basePath: "/api",
         servers: [{
             url: 'http://localhost:9000/',

@@ -63,12 +63,27 @@ const installUserRouter = require('./_user');
  *           type: integer
  *           description: Offset actually used
  *           example: 1
+ *     Product:
+ *       allOf:
+ *         - $ref: "#/components/schemas/Base"
+ *         - type: object
+ *           required:
+ *             - name
+ *             - price
+ *           properties:
+ *             name:
+ *               type: string
+ *             email:
+ *               type: integer
+ *           example:
+ *             $ref: "#/components/examples/Product"
  *     User:
  *       allOf:
  *         - $ref: "#/components/schemas/Base"
  *         - type: object
  *           required:
  *             - name
+ *             - email
  *           properties:
  *             name:
  *               type: "string"
@@ -78,6 +93,10 @@ const installUserRouter = require('./_user');
  *           example:
  *             $ref: "#/components/examples/User"
  *   examples:
+ *     Product:
+ *       id: "7f28c5f9-d711-4cd6-ac15-d13d71abff85"
+ *       name: "Asperge"
+ *       price: 5
  *     User:
  *       id: "8f4153f6-939e-4dcf-9019-724999265f0d"
  *       name: "Thomas Aelbecht"

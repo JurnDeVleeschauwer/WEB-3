@@ -68,6 +68,7 @@ const login = async (email, password) => {
  *
  * @param {object} user - The user's data.
  * @param {string} user.name - The user's name.
+ * @param {string} user.password - The user's password.
  */
 const register = async ({
   name,
@@ -135,15 +136,14 @@ const getById = async (id) => {
  * @param {string} id - Id of the user to update.
  * @param {object} user - User to save.
  * @param {string} [user.name] - Name of the user.
- * @param {number} [user.email] - Email of the user.
  *
  * @throws {ServiceError} One of:
  * - NOT_FOUND: No user with the given id could be found.
  * - VALIDATION_FAILED: A user with the same email exists.
  */
-const updateById = async (id, { name, email }) => {
-  debugLog(`Updating user with id ${id}`, { name, email });
-  const user = await userRepository.updateById(id, { name, email });
+const updateById = async (id, { name }) => {
+  debugLog(`Updating user with id ${id}`, { name });
+  const user = await userRepository.updateById(id, { name });
   return makeExposedUser(user);
 };
 

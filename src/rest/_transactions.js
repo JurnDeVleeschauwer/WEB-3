@@ -5,6 +5,7 @@ const Joi = require('joi');
 const validate = require('./_validation.js');
 
 
+
 /**
  * @swagger
  * tags:
@@ -55,21 +56,15 @@ const validate = require('./_validation.js');
  * @swagger
  * /api/transactions:
  *   get:
- *     summary: Get all transactions (paginated)
+ *     summary: Get all transactions
  *     tags:
  *     - Transactions
  *     parameters:
  *           - $ref: "#/components/parameters/limitParam"
  *           - $ref: "#/components/parameters/offsetParam" 
- *     requestBody:
- *       $ref: "#/components/requestBodies/Transaction"
  *     responses:
  *       200:
  *         description: List of transactions
- *         content:
- *           application/json:
- *             schema:
- *               $ref: "#/components/schemas/TransactionsList"
  */
 const getAllTransactions = async (ctx) => {
     const limit = ctx.query.limit && Number(ctx.query.limit);
@@ -93,7 +88,23 @@ getAllTransactions.validationScheme = {
  *     tags:
  *      - Transactions
  *     requestBody:
- *       $ref: "#/components/requestBodies/Transaction"
+ *        required: true
+ *        content:
+ *           application/json:
+ *                schema:
+ *                   type: object
+ *                   required:
+ *                        - amount
+ *                        - date
+ *                        - productId
+ *                   properties:
+ *                        amount:
+ *                            type: integer
+ *                            format: int64
+ *                        date:
+ *                            type: string
+ *                        productId:
+ *                            type: string
  *     responses:
  *       200:
  *         description: The created transaction
@@ -119,6 +130,29 @@ createTransaction.validationScheme = {
     },
 };
 
+/**
+ * @swagger
+ * /api/transactions/{id}:
+ *   get:
+ *     summary: Find transaction by ID
+ *     description: Get a transaction with specifiek id
+ *     tags:
+ *      - Transactions
+ *     parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        description: "ID of transaction to return"
+ *        required: true
+ *        type: "integer"
+ *        format: "int64"
+ *     responses:
+ *       200:
+ *         description: Find transaction by ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Transaction"
+ */
 const getTransactionById = async (ctx) => {
     ctx.body = await transactionService.getById(ctx.params.id);
 };
@@ -128,6 +162,47 @@ getTransactionById.validationScheme = {
     },
 };
 
+/**
+ * @swagger
+ * /api/transactions/{id}:
+ *   put:
+ *     summary: Updates a specifiek transaction
+ *     description: Updates a specifiek transaction
+ *     tags:
+ *      - Transactions
+ *     parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        description: "ID of transaction to update"
+ *        required: true
+ *        type: "integer"
+ *        format: "int64"
+ *     requestBody:
+ *        required: true
+ *        content:
+ *           application/json:
+ *                schema:
+ *                   type: object
+ *                   required:
+ *                        - amount
+ *                        - date
+ *                        - productId
+ *                   properties:
+ *                        amount:
+ *                            type: integer
+ *                            format: int64
+ *                        date:
+ *                            type: string
+ *                        productId:
+ *                            type: string
+ *     responses:
+ *       200:
+ *         description: Update transaction
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Transaction"
+ */
 const updateTransaction = async (ctx) => {
     ctx.body = await transactionService.updateById(ctx.params.id, {
         ...ctx.request.body,
@@ -146,6 +221,29 @@ updateTransaction.validationScheme = {
     },
 };
 
+/**
+ * @swagger
+ * /api/transactions/{id}:
+ *   delete:
+ *     summary: Delete transaction by ID
+ *     description: Delete a transaction with specifiek id
+ *     tags:
+ *      - Transactions
+ *     parameters:
+ *      - name: "id"
+ *        in: "path"
+ *        description: "ID of transaction to delete"
+ *        required: true
+ *        type: "integer"
+ *        format: "int64"
+ *     responses:
+ *       204:
+ *         description: Find transaction by ID and delete it
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Transaction"
+ */
 const deleteTransaction = async (ctx) => {
     await transactionService.deleteById(ctx.params.id);
     ctx.status = 204;

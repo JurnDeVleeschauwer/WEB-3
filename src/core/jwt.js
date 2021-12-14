@@ -1,5 +1,6 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
+
 const ServiceError = require('./serviceError');
 
 const JWT_AUDIENCE = config.get('auth.jwt.audience');
