@@ -14,17 +14,16 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-			NODE_ENV: test
-			DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
-			DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-			DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-			DATABASE_HOST: remotemysql.com
-			JWT_SECRET: ${{ secrets.JWT_SECRET }}
-
+      NODE_ENV: test
+      DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_HOST: remotemysql.com
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+			
     strategy:
       matrix:
         node-version: [16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
@@ -33,9 +32,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - uses: actions/cache@v2
-			with:
-				path: '**/node_modules'
-				key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
     - run: npm ci
     - run: npm test:ci
