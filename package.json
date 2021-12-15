@@ -2,6 +2,7 @@
     "author": "Jurn",
     "name": "webservices-webshop",
     "version": "1.0.0",
+    "license": "UNLICENSED",
     "main": "index.js",
     "dependencies": {
         "@koa/cors": "^3.1.0",
@@ -35,6 +36,7 @@
     "scripts": {
         "start": "npx env-cmd nodemon src/index.js",
         "test": "npx env-cmd -f .env.test jest",
-        "test:coverage": "npx env-cmd -f .env.test jest --coverage"
+        "test:coverage": "npx env-cmd -f .env.test jest --coverage",
+        "test:ci": "jest"
     }
 }
