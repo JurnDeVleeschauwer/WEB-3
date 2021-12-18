@@ -17,6 +17,7 @@ const emoji = require('node-emoji');
 const swaggerJsdoc = require('swagger-jsdoc');
 const { koaSwagger } = require('koa2-swagger-ui');
 const swaggerDefinition = require('./swagger.config');
+const { EnvCmd } = require('env-cmd');
 
 const NODE_ENV = config.get('env');
 const CORS_ORIGINS = config.get('cors.origins');
@@ -199,8 +200,9 @@ module.exports = async function createServer() {
 
         start() {
             return new Promise((resolve) => {
-                app.listen(9000);
-                logger.info(`🚀 Server listening on http://localhost:9000`);
+                const port = process.env.PORT || 9000;
+                app.listen(port);
+                logger.info(`🚀 Server listening on http://localhost:${port}`);
                 resolve()
             })
         },
